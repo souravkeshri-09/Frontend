@@ -1,11 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { Server_URL } from "../../utils/config";
-import { showErrorToast, showSuccessToast } from "../../utils/toasthelper";
 
+
+import {
+  FaBook,
+  FaUser,
+  FaTag,
+  FaBarcode,
+  FaImage,
+  FaMoneyBillWave,
+  FaBoxes,
+  FaFileAlt,
+} from "react-icons/fa";
+
+import { Server_URL } from "../../utils/config";
+import {
+  showErrorToast,
+  showSuccessToast,
+} from "../../utils/toasthelper";
 
 const AddBookForm = () => {
+  const [loading, setLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -15,23 +32,24 @@ const AddBookForm = () => {
 
   const onSubmit = async (data) => {
     try {
+      setLoading(true);
+
       const formData = new FormData();
-      
-      // Append all text fields
+
       Object.keys(data).forEach((key) => {
         if (key !== "coverImage") {
           formData.append(key, data[key]);
         }
       });
-  
-      // Append the file manually
+
       if (data.coverImage && data.coverImage[0]) {
-        formData.append("coverImage", data.coverImage[0]); // Ensure it's the file object
+        formData.append("coverImage", data.coverImage[0]);
       }
-  
+
       const authToken = localStorage.getItem("authToken");
-      const url = Server_URL + "books/add";
-  
+
+      const url = `${Server_URL}books/add`;
+
       const response = await axios.post(url, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -39,7 +57,6 @@ const AddBookForm = () => {
         },
       });
 
-      console.log(response.data);
       const { error, message } = response.data;
 
       if (error) {
@@ -48,100 +65,416 @@ const AddBookForm = () => {
         showSuccessToast(message);
         reset();
       }
-      
     } catch (error) {
-      console.error("Error:", error.response?.data?.message || error.message);
-      showErrorToast("Failed to add book!");
+      console.error(error);
+      showErrorToast(
+        error.response?.data?.message || "Failed to add book!"
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="container mt-4">
-      <h2 className="text-center mb-4">📚 Add a New Book</h2>
-      <form onSubmit={handleSubmit(onSubmit)} className="p-4 shadow-sm bg-light rounded">
-        <div className="mb-3">
-          <label className="form-label">Book Title</label>
-          <input
-            type="text"
-            className="form-control"
-            {...register("title", { required: "Title is required" })}
-          />
-          {errors.title && <small className="text-danger">{errors.title.message}</small>}
+    <div
+      className="container-fluid py-5"
+      style={{
+        minHeight: "100vh",
+        background: "rgba(147,51,234,.35)",
+      }}
+    >
+      <div className="row justify-content-center">
+        <div className="col-12 col-md-10 col-lg-9 col-xl-8">
+          <div
+            className="card border-0 shadow-lg"
+            style={{
+              borderRadius: "22px",
+              overflow: "hidden",
+              background: "#ffffff",
+            }}
+          >
+            {/* Header */}
+            <div
+              className="text-center text-white py-4"
+              style={{
+                background: "#8b5cf6",
+              }}
+            >
+              <FaBook size={48} />
+
+              <h2 className="fw-bold mt-3 mb-1">
+                Add New Book
+              </h2>
+
+              <p className="mb-0 opacity-75">
+                Manage your library collection
+              </p>
+            </div>
+
+            <div className="card-body p-4 p-lg-5">
+
+              <form onSubmit={handleSubmit(onSubmit)}>
+
+                <div className="row g-4">
+
+                  {/* Book Title */}
+
+                  <div className="col-12 col-md-6">
+
+                    <label className="form-label fw-semibold">
+                      <FaBook
+                        className="me-2"
+                        color="#8b5cf6"
+                      />
+                      Book Title
+                    </label>
+
+                    <input
+                      type="text"
+                      className="form-control form-control-lg"
+                      placeholder="Enter Book Title"
+                      {...register("title", {
+                        required: "Book title is required",
+                      })}
+                    />
+
+                    {errors.title && (
+                      <small className="text-danger">
+                        {errors.title.message}
+                      </small>
+                    )}
+
+                  </div>
+
+                  {/* Author */}
+
+                  <div className="col-12 col-md-6">
+
+                    <label className="form-label fw-semibold">
+                      <FaUser
+                        className="me-2"
+                        color="#8b5cf6"
+                      />
+                      Author
+                    </label>
+
+                    <input
+                      type="text"
+                      className="form-control form-control-lg"
+                      placeholder="Enter Author Name"
+                      {...register("author", {
+                        required: "Author is required",
+                      })}
+                    />
+
+                    {errors.author && (
+                      <small className="text-danger">
+                        {errors.author.message}
+                      </small>
+                    )}
+
+                  </div>
+                  {/* Category */}
+
+                  <div className="col-12 col-md-6">
+
+                    <label className="form-label fw-semibold">
+                      <FaTag
+                        className="me-2"
+                        color="#8b5cf6"
+                      />
+                      Category
+                    </label>
+
+                    <select
+                      className="form-select form-select-lg"
+                      {...register("category", {
+                        required: "Category is required",
+                      })}
+                    >
+                      <option value="">Select Category</option>
+                      <option value="Fiction">Fiction</option>
+                      <option value="Non-fiction">Non-fiction</option>
+                      <option value="Science">Science</option>
+                      <option value="History">History</option>
+                      <option value="Technology">Technology</option>
+                      <option value="Biography">Biography</option>
+                    </select>
+
+                    {errors.category && (
+                      <small className="text-danger">
+                        {errors.category.message}
+                      </small>
+                    )}
+
+                  </div>
+
+                  {/* ISBN */}
+
+                  <div className="col-12 col-md-6">
+
+                    <label className="form-label fw-semibold">
+                      <FaBarcode
+                        className="me-2"
+                        color="#8b5cf6"
+                      />
+                      ISBN Number
+                    </label>
+
+                    <input
+                      type="text"
+                      className="form-control form-control-lg"
+                      placeholder="Enter ISBN Number"
+                      {...register("isbn", {
+                        required: "ISBN is required",
+                      })}
+                    />
+
+                    {errors.isbn && (
+                      <small className="text-danger">
+                        {errors.isbn.message}
+                      </small>
+                    )}
+
+                  </div>
+                  {/* Book Cover Image */}
+
+                  <div className="col-12 col-md-6">
+
+                    <label className="form-label fw-semibold">
+                      <FaImage
+                        className="me-2"
+                        color="#8b5cf6"
+                      />
+                      Book Cover Image
+                    </label>
+
+                    <input
+                      type="file"
+                      className="form-control form-control-lg"
+                      accept="image/*"
+                      {...register("coverImage")}
+                    />
+
+                    <small className="text-muted">
+                      Upload JPG, JPEG or PNG image
+                    </small>
+
+                  </div>
+
+                  {/* Total Copies */}
+
+                  <div className="col-12 col-md-6">
+
+                    <label className="form-label fw-semibold">
+                      <FaBoxes
+                        className="me-2"
+                        color="#8b5cf6"
+                      />
+                      Total Copies
+                    </label>
+
+                    <input
+                      type="number"
+                      min="1"
+                      className="form-control form-control-lg"
+                      placeholder="Enter Total Copies"
+                      {...register("totalCopies", {
+                        required: "Total copies is required",
+                        min: {
+                          value: 1,
+                          message: "Minimum 1 copy required",
+                        },
+                      })}
+                    />
+
+                    {errors.totalCopies && (
+                      <small className="text-danger">
+                        {errors.totalCopies.message}
+                      </small>
+                    )}
+
+                  </div>
+                  {/* Price */}
+
+                  <div className="col-12 col-md-6">
+
+                    <label className="form-label fw-semibold">
+                      <FaMoneyBillWave
+                        className="me-2"
+                        color="#8b5cf6"
+                      />
+                      Price
+                    </label>
+
+                    <div className="input-group input-group-lg">
+
+                      <span className="input-group-text">
+                        ₹
+                      </span>
+
+                      <input
+                        type="number"
+                        step="0.01"
+                        className="form-control"
+                        placeholder="Enter Book Price"
+                        {...register("price", {
+                          required: "Price is required",
+                          min: {
+                            value: 1,
+                            message: "Price must be greater than 0",
+                          },
+                        })}
+                      />
+
+                    </div>
+
+                    {errors.price && (
+                      <small className="text-danger">
+                        {errors.price.message}
+                      </small>
+                    )}
+
+                  </div>
+
+                  {/* Description */}
+
+                  <div className="col-12">
+
+                    <label className="form-label fw-semibold">
+                      <FaFileAlt
+                        className="me-2"
+                        color="#8b5cf6"
+                      />
+                      Description
+                    </label>
+
+                    <textarea
+                      rows="5"
+                      className="form-control"
+                      placeholder="Enter book description..."
+                      {...register("description", {
+                        required: "Description is required",
+                      })}
+                    ></textarea>
+
+                    {errors.description && (
+                      <small className="text-danger">
+                        {errors.description.message}
+                      </small>
+                    )}
+
+                  </div>
+
+                  {/* Buttons */}
+
+                  <div className="col-12 mt-3">
+
+                    <div className="d-grid gap-3 d-md-flex justify-content-md-end">
+
+                      {/* Reset Button */}
+
+                      <button
+                        type="button"
+                        className="btn btn-outline-secondary px-4 py-2"
+                        onClick={() => reset()}
+                        disabled={loading}
+                        style={{
+                          borderRadius: "10px",
+                          minWidth: "140px",
+                        }}
+                      >
+                        Reset
+                      </button>
+
+                      {/* Submit Button */}
+
+                      <button
+                        type="submit"
+                        disabled={loading}
+                        className="btn text-white px-4 py-2"
+                        style={{
+                          backgroundColor: "#8b5cf6",
+                          border: "none",
+                          borderRadius: "10px",
+                          minWidth: "180px",
+                          fontWeight: "600",
+                        }}
+                      >
+                        {loading ? (
+                          <>
+                            <span
+                              className="spinner-border spinner-border-sm me-2"
+                              role="status"
+                              aria-hidden="true"
+                            ></span>
+
+                            Adding Book...
+                          </>
+                        ) : (
+                          <>
+                            <FaBook className="me-2" />
+                            Add Book
+                          </>
+                        )}
+                      </button>
+
+                    </div>
+
+                  </div>
+
+                </div>
+              </form>
+
+            </div>
+
+
+          </div>
+
+        </div>
+      </div>
+
+      {/* Quick Tips */}
+
+      <div className="row justify-content-center mt-3">
+
+        <div className="col-lg-8">
+
+          <div
+            className="card border-0 shadow-sm"
+            style={{
+              borderRadius: "16px",
+            }}
+          >
+
+
+
+          </div>
+
         </div>
 
-        <div className="mb-3">
-          <label className="form-label">Author</label>
-          <input
-            type="text"
-            className="form-control"
-            {...register("author", { required: "Author is required" })}
-          />
-          {errors.author && <small className="text-danger">{errors.author.message}</small>}
+      </div>
+
+      {/* Copyright */}
+
+      <div className="row justify-content-center mt-4">
+
+        <div className="col-lg-8">
+
+          <p
+            className="text-center mb-0"
+            style={{
+              color: "#6c757d",
+              fontSize: "14px",
+            }}
+          >
+            © {new Date().getFullYear()} AXLIB Library Management System
+          </p>
+
         </div>
 
-        <div className="mb-3">
-          <label className="form-label">Category</label>
-          <select className="form-select" {...register("category", { required: "Category is required" })}>
-            <option value="">Select Category</option>
-            <option value="Fiction">Fiction</option>
-            <option value="Non-fiction">Non-fiction</option>
-            <option value="Science">Science</option>
-            <option value="History">History</option>
-          </select>
-          {errors.category && <small className="text-danger">{errors.category.message}</small>}
-        </div>
+      </div>
 
-        <div className="mb-3">
-          <label className="form-label">ISBN</label>
-          <input
-            type="text"
-            className="form-control"
-            {...register("isbn", { required: "ISBN is required" })}
-          />
-          {errors.isbn && <small className="text-danger">{errors.isbn.message}</small>}
-        </div>
-
-        
-
-        <div className="mb-3">
-          <label className="form-label">Book Cover Image</label>
-          <input
-            type="file"
-            className="form-control"
-            {...register("coverImage")}
-          />
-        </div>
-
-        <div className="mb-3">
-          <label className="form-label">Total Copies</label>
-          <input 
-            type="number" 
-            className="form-control" 
-            {...register("totalCopies", { required: true, min: 1 })} 
-          />
-        </div>
-        
-        <div className="mb-3">
-          <label className="form-label">Price</label>
-          <input 
-            type="number" 
-            step="0.01" 
-            className="form-control" 
-            {...register("price", { required: true })} 
-          />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Description</label>
-          <textarea
-            className="form-control"
-            rows="3"
-            {...register("description", { required: "Description is required" })}
-          ></textarea>
-          {errors.description && <small className="text-danger">{errors.description.message}</small>}
-        </div>
-
-        <button type="submit" className="btn btn-primary w-100">Add Book</button>
-      </form>
     </div>
   );
 };

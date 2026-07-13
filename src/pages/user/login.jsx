@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./login.css";
 import { Server_URL } from "../../utils/config";
 import {
@@ -17,6 +18,9 @@ export default function Login() {
   } = useForm();
 
   const navigate = useNavigate();
+
+  // Password Show / Hide
+  const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = async (data) => {
     try {
@@ -72,6 +76,7 @@ export default function Login() {
           onSubmit={handleSubmit(onSubmit)}
           className="login-form"
         >
+          {/* Email */}
           <div className="form-group">
             <label>Email Address</label>
 
@@ -91,17 +96,33 @@ export default function Login() {
             )}
           </div>
 
+          {/* Password */}
           <div className="form-group">
             <label>Password</label>
 
-            <input
-              type="password"
-              placeholder="Enter your password"
-              className="form-input"
-              {...register("password", {
-                required: "Password is required",
-              })}
-            />
+            <div className="password-wrapper">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter your password"
+                className="form-input"
+                {...register("password", {
+                  required: "Password is required",
+                })}
+              />
+
+              <span
+                className="toggle-password"
+                onClick={() =>
+                  setShowPassword(!showPassword)
+                }
+              >
+                {showPassword ? (
+                  <FaEyeSlash />
+                ) : (
+                  <FaEye />
+                )}
+              </span>
+            </div>
 
             {errors.password && (
               <span className="error-text">
@@ -110,6 +131,7 @@ export default function Login() {
             )}
           </div>
 
+          {/* Forgot Password */}
           <div className="forgot-password">
             <button
               type="button"
@@ -122,6 +144,7 @@ export default function Login() {
             </button>
           </div>
 
+          {/* Login Button */}
           <button
             type="submit"
             className="btn-submit"

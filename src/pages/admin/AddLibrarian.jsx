@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { FaEye, FaEyeSlash, FaUserPlus } from "react-icons/fa";
 import { Server_URL } from "../../utils/config";
-import { showErrorToast, showSuccessToast } from "../../utils/toasthelper";
-
+import {
+  showErrorToast,
+  showSuccessToast,
+} from "../../utils/toasthelper";
 
 export default function AddLibrarian() {
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -15,13 +21,17 @@ export default function AddLibrarian() {
 
   const onSubmit = async (data) => {
     try {
-      const formData = { ...data, role: "librarian" };
-      const url = Server_URL + "admin/addlibrarian";
-      const authToken = localStorage.getItem("authToken");
-      console.log(authToken);
+      setLoading(true);
 
-      const response = await axios.post(
-        url,
+      const authToken = localStorage.getItem("authToken");
+
+      const formData = {
+        ...data,
+        role: "librarian",
+      };
+
+      await axios.post(
+        `${Server_URL}admin/addlibrarian`,
         formData,
         {
           headers: {
@@ -30,66 +40,185 @@ export default function AddLibrarian() {
         }
       );
 
-      console.log("Response:", response.data);
-      showSuccessToast("Registration Successful!");
+      showSuccessToast("Librarian Added Successfully!");
       reset();
     } catch (error) {
-      console.error("Error:", error.response?.data || error.message);
-      showErrorToast("Registration Failed!");
+      console.error(error.response?.data || error.message);
+
+      showErrorToast(
+        error.response?.data?.message || "Registration Failed!"
+      );
+    } finally {
+      setLoading(false);
     }
-   
   };
+
   return (
-    <div className="container mt-4">
-      <h2 className="text-center">User Registration</h2>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="p-4 border rounded shadow"
-      >
-    
-        <div className="mb-3">
-          <label className="form-label">Name</label>
-          <input
-            type="text"
-            className="form-control"
-            {...register("name", { required: "Name is required" })}
-          />
-          {errors.name && <p className="text-danger">{errors.name.message}</p>}
+    <div
+      className="container-fluid"
+      style={{
+        minHeight: "100vh",
+        background: "rgba(147,51,234,.35)",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: "40px 15px",
+      }}
+    >
+      <div className="row justify-content-center w-100">
+        <div className="col-lg-5 col-md-7 col-sm-10">
+
+          <div
+            className="card border-0"
+            style={{
+              borderRadius: "20px",
+              overflow: "hidden",
+              boxShadow: "0 15px 40px rgba(139,92,246,.25)",
+            }}
+          >
+            {/* Header */}
+            <div
+              className="text-center text-white py-4"
+              style={{
+                background: "#8b5cf6",
+              }}
+            >
+              <FaUserPlus size={45} className="mb-3" />
+
+              <h2 className="fw-bold mb-1">
+                Add Librarian
+              </h2>
+
+              <p className="mb-0">
+                Create a new librarian account
+              </p>
+            </div>
+
+            {/* Form */}
+            <div className="card-body p-4 bg-white">
+
+              <form onSubmit={handleSubmit(onSubmit)}>
+
+                {/* Name */}
+                <div className="mb-3">
+                  <label className="form-label fw-semibold">
+                    Full Name
+                  </label>
+
+                  <input
+                    type="text"
+                    className="form-control form-control-lg"
+                    placeholder="Enter Full Name"
+                    {...register("name", {
+                      required: "Name is required",
+                    })}
+                  />
+
+                  {errors.name && (
+                    <small className="text-danger">
+                      {errors.name.message}
+                    </small>
+                  )}
+                </div>
+
+                {/* Email */}
+                <div className="mb-3">
+                  <label className="form-label fw-semibold">
+                    Email Address
+                  </label>
+
+                  <input
+                    type="email"
+                    className="form-control form-control-lg"
+                    placeholder="Enter Email Address"
+                    {...register("email", {
+                      required: "Email is required",
+                      pattern: {
+                        value:
+                          /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                        message: "Enter a valid email",
+                      },
+                    })}
+                  />
+
+                  {errors.email && (
+                    <small className="text-danger">
+                      {errors.email.message}
+                    </small>
+                  )}
+                </div>
+
+                {/* Password */}
+                <div className="mb-4">
+                  <label className="form-label fw-semibold">
+                    Password
+                  </label>
+
+                  <div className="input-group">
+
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      className="form-control form-control-lg"
+                      placeholder="Enter Password"
+                      {...register("password", {
+                        required: "Password is required",
+                        minLength: {
+                          value: 6,
+                          message:
+                            "Password must be at least 6 characters",
+                        },
+                      })}
+                    />
+
+                    <button
+                      type="button"
+                      className="btn btn-outline-secondary"
+                      onClick={() =>
+                        setShowPassword(!showPassword)
+                      }
+                    >
+                      {showPassword ? (
+                        <FaEyeSlash />
+                      ) : (
+                        <FaEye />
+                      )}
+                    </button>
+
+                  </div>
+
+                  {errors.password && (
+                    <small className="text-danger">
+                      {errors.password.message}
+                    </small>
+                  )}
+                </div>
+
+                {/* Submit Button */}
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="btn w-100 text-white fw-bold py-3"
+                  style={{
+                    backgroundColor: "#8b5cf6",
+                    border: "none",
+                    borderRadius: "10px",
+                    fontSize: "17px",
+                    transition: "0.3s",
+                  }}
+                >
+                  {loading
+                    ? "Adding Librarian..."
+                    : "Add Librarian"}
+                </button>
+
+              </form>
+
+            </div>
+
+          </div>
+
         </div>
-
-        
-        <div className="mb-3">
-          <label className="form-label">Email</label>
-          <input
-            type="email"
-            className="form-control"
-            {...register("email", { required: "Email is required" })}
-          />
-          {errors.email && (
-            <p className="text-danger">{errors.email.message}</p>
-          )}
-        </div>
-
-     
-        <div className="mb-3">
-          <label className="form-label">Password</label>
-          <input
-            type="password"
-            className="form-control"
-            {...register("password", { required: "Password is required" })}
-          />
-          {errors.password && (
-            <p className="text-danger">{errors.password.message}</p>
-          )}
-        </div>
-
-
-
-       
-        <button type="submit" className="btn btn-primary w-100">
-          Add
-        </button>
-      </form>
+      </div>
     </div>
   );
 }
