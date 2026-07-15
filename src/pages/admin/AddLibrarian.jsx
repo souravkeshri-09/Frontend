@@ -77,13 +77,21 @@ export default function AddLibrarian() {
             }}
           >
             {/* Header */}
+            {/* Header */}
             <div
-              className="text-center text-white py-4"
+              className="py-4 text-white d-flex flex-column justify-content-center align-items-center"
               style={{
                 background: "#8b5cf6",
+                textAlign: "center",
               }}
             >
-              <FaUserPlus size={45} className="mb-3" />
+              <FaUserPlus
+                size={50}
+                style={{
+                  display: "block",
+                  margin: "0 auto 12px",
+                }}
+              />
 
               <h2 className="fw-bold mb-1">
                 Add Librarian
@@ -102,7 +110,7 @@ export default function AddLibrarian() {
                 {/* Name */}
                 <div className="mb-3">
                   <label className="form-label fw-semibold">
-                    Full Name
+                    <b>Full Name</b>
                   </label>
 
                   <input
@@ -124,7 +132,7 @@ export default function AddLibrarian() {
                 {/* Email */}
                 <div className="mb-3">
                   <label className="form-label fw-semibold">
-                    Email Address
+                    <b>Email Address</b>
                   </label>
 
                   <input
@@ -151,7 +159,7 @@ export default function AddLibrarian() {
                 {/* Password */}
                 <div className="mb-4">
                   <label className="form-label fw-semibold">
-                    Password
+                    <b>Password</b>
                   </label>
 
                   <div className="input-group">

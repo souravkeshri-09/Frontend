@@ -4,4 +4,24 @@
   box-sizing: border-box;
 }
 
- 
+ .Toastify{
+
+    position: fixed !important;
+
+    inset: 0 auto auto 0;
+
+    width: 0 !important;
+
+    height: 0 !important;
+
+    overflow: visible !important;
+
+    pointer-events: none;
+
+}
+
+.Toastify__toast-container{
+
+    pointer-events: auto;
+
+}

@@ -94,13 +94,20 @@ const AddBookForm = () => {
             }}
           >
             {/* Header */}
+            {/* Header */}
             <div
-              className="text-center text-white py-4"
+              className="text-white py-4 d-flex flex-column align-items-center justify-content-center text-center"
               style={{
                 background: "#8b5cf6",
               }}
             >
-              <FaBook size={48} />
+              <FaBook
+                size={60}
+                style={{
+                  display: "block",
+                  margin: "0 auto",
+                }}
+              />
 
               <h2 className="fw-bold mt-3 mb-1">
                 Add New Book
@@ -122,11 +129,7 @@ const AddBookForm = () => {
                   <div className="col-12 col-md-6">
 
                     <label className="form-label fw-semibold">
-                      <FaBook
-                        className="me-2"
-                        color="#8b5cf6"
-                      />
-                      Book Title
+                      <b>Book Title</b>
                     </label>
 
                     <input
@@ -151,11 +154,7 @@ const AddBookForm = () => {
                   <div className="col-12 col-md-6">
 
                     <label className="form-label fw-semibold">
-                      <FaUser
-                        className="me-2"
-                        color="#8b5cf6"
-                      />
-                      Author
+                      <b>Author</b>
                     </label>
 
                     <input
@@ -179,11 +178,7 @@ const AddBookForm = () => {
                   <div className="col-12 col-md-6">
 
                     <label className="form-label fw-semibold">
-                      <FaTag
-                        className="me-2"
-                        color="#8b5cf6"
-                      />
-                      Category
+                      <b>Category</b>
                     </label>
 
                     <select
@@ -214,11 +209,7 @@ const AddBookForm = () => {
                   <div className="col-12 col-md-6">
 
                     <label className="form-label fw-semibold">
-                      <FaBarcode
-                        className="me-2"
-                        color="#8b5cf6"
-                      />
-                      ISBN Number
+                      <b>ISBN Number</b>
                     </label>
 
                     <input
@@ -242,11 +233,7 @@ const AddBookForm = () => {
                   <div className="col-12 col-md-6">
 
                     <label className="form-label fw-semibold">
-                      <FaImage
-                        className="me-2"
-                        color="#8b5cf6"
-                      />
-                      Book Cover Image
+                      <b>Book Cover Image</b>
                     </label>
 
                     <input
@@ -267,11 +254,7 @@ const AddBookForm = () => {
                   <div className="col-12 col-md-6">
 
                     <label className="form-label fw-semibold">
-                      <FaBoxes
-                        className="me-2"
-                        color="#8b5cf6"
-                      />
-                      Total Copies
+                      <b>Total Copies</b>
                     </label>
 
                     <input
@@ -300,11 +283,7 @@ const AddBookForm = () => {
                   <div className="col-12 col-md-6">
 
                     <label className="form-label fw-semibold">
-                      <FaMoneyBillWave
-                        className="me-2"
-                        color="#8b5cf6"
-                      />
-                      Price
+                      <b>Price</b>
                     </label>
 
                     <div className="input-group input-group-lg">
@@ -342,11 +321,7 @@ const AddBookForm = () => {
                   <div className="col-12">
 
                     <label className="form-label fw-semibold">
-                      <FaFileAlt
-                        className="me-2"
-                        color="#8b5cf6"
-                      />
-                      Description
+                      <b>Description</b>
                     </label>
 
                     <textarea
@@ -413,7 +388,6 @@ const AddBookForm = () => {
                           </>
                         ) : (
                           <>
-                            <FaBook className="me-2" />
                             Add Book
                           </>
                         )}

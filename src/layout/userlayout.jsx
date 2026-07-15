@@ -12,7 +12,7 @@ export default function UserLayout() {
 
       <Footer />
 
-      <ToastContainer
+      {/* <ToastContainer
         position="top-right"
         autoClose={1000}
         hideProgressBar={false}
@@ -23,7 +23,7 @@ export default function UserLayout() {
         draggable
         pauseOnHover
         theme="light"
-      />
+      /> */}
     </>
   );
 }
