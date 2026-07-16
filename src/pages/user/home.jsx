@@ -10,7 +10,8 @@ import {
   FiBook,
   FiClock,
   FiUser,
-  FiCalendar
+  FiCalendar,
+  FiGrid
 } from "react-icons/fi";
 
 import Preloader from "../../components/Preloader";
@@ -150,7 +151,7 @@ export default function Home() {
 
             <div className="stat-cardhome">
 
-              <FiBook className="stat-icon" />
+              <FiGrid className="stat-icon" />
 
               <h3>
                 {stats.totalCategories}+
