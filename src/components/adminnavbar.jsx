@@ -1,3 +1,12 @@
+import {
+  FaUserCircle,
+  FaTachometerAlt,
+  FaBook,
+  FaPlusCircle,
+  FaExchangeAlt,
+  FaSignOutAlt,
+  FaEye,
+} from "react-icons/fa";
 import React, { useEffect, useState } from "react";
 import { Dropdown } from "bootstrap";
 import logo from "../assets/axlib-logo.png";
@@ -69,19 +78,15 @@ export default function AdminNavbar() {
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
 
                 <li>
-                  <Link
-                    className="dropdown-item"
-                    to="/admin/addbook"
-                  >
+                  <Link className="dropdown-item d-flex align-items-center gap-2" to="/admin/addbook">
+                    <FaPlusCircle />
                     Add Book
                   </Link>
                 </li>
 
                 <li>
-                  <Link
-                    className="dropdown-item"
-                    to="/admin/viewbook"
-                  >
+                  <Link className="dropdown-item d-flex align-items-center gap-2" to="/admin/viewbook">
+                    <FaEye />
                     View Books
                   </Link>
                 </li>
@@ -114,11 +119,12 @@ export default function AdminNavbar() {
 
               <li className="nav-item dropdown">
                 <button
-                  className="btn btn-light dropdown-toggle"
+                  className="btn btn-light dropdown-toggle d-flex align-items-center gap-2"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  👤 Profile
+                  <FaUserCircle />
+                  Profile
                 </button>
                 <ul className="dropdown-menu dropdown-menu-end">
                   <li>

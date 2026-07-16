@@ -1,57 +1,79 @@
-```css
-/* ==========================================================
-   ALL CATEGORIES - PART 1
-========================================================== */
+/* ==================================================
+   CATEGORIES PAGE
+================================================== */
+
+:root{
+    --primary:#7c3aed;
+    --secondary:#2563eb;
+    --dark:#020617;
+    --card:#161b33;
+    --sidebar:#241f4b;
+    --text:#ffffff;
+    --text-light:#cbd5e1;
+}
+
+/* ============================= */
 
 .all-categories-container{
 
     min-height:100vh;
 
-    padding:35px;
+    padding:40px;
 
     background:
-    radial-gradient(circle at top left,
-    rgba(124,58,237,.22),
-    transparent 35%),
-
-    radial-gradient(circle at bottom right,
-    rgba(37,99,235,.18),
-    transparent 40%),
-
-    #020617;
+    radial-gradient(circle at top left, rgba(124,58,237,.20), transparent 35%),
+    radial-gradient(circle at bottom right, rgba(37,99,235,.18), transparent 40%),
+    var(--dark);
 }
+
+/* ============================= */
 
 .all-categories-row{
 
     display:flex;
 
-    gap:30px;
+    gap:35px;
+
+    align-items:flex-start;
 }
 
-/* ===============================
-   SIDEBAR
-================================ */
+/* ==================================================
+SIDEBAR
+================================================== */
 
 .all-categories-sidebar{
 
-    width:240px;
+    width:260px;
 
-    padding:22px;
+    background:var(--sidebar);
 
     border-radius:22px;
 
-    background:
-    rgba(255,255,255,.04);
+    padding:25px;
 
-    border:
-    1px solid rgba(139,92,246,.20);
-
-    backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,.08);
 
     box-shadow:
-    0 0 20px rgba(139,92,246,.10);
+    0 15px 40px rgba(0,0,0,.30);
 
-    height:fit-content;
+    position:sticky;
+
+    top:110px;
+}
+
+.all-categories-sidebar h3{
+
+    color:#fff;
+
+    font-size:30px;
+
+    font-weight:700;
+
+    margin-bottom:20px;
+
+    padding-bottom:14px;
+
+    border-bottom:2px solid var(--primary);
 }
 
 .all-categories-nav{
@@ -67,113 +89,109 @@
 
     padding:14px 18px;
 
-    margin-bottom:12px;
+    margin-bottom:14px;
 
     border-radius:14px;
 
-    color:#cbd5e1;
+    background:rgba(255,255,255,.05);
+
+    color:#dbeafe;
 
     cursor:pointer;
 
     transition:.35s;
-
-    background:
-    rgba(255,255,255,.03);
 }
 
 .all-categories-nav-item:hover{
 
+    background:
+    linear-gradient(90deg,var(--primary),var(--secondary));
+
     color:#fff;
 
     transform:translateX(5px);
-
-    background:
-    rgba(139,92,246,.18);
-
-    box-shadow:
-    0 0 15px rgba(139,92,246,.20);
 }
 
 .all-categories-nav-item.active{
 
+    background:
+    linear-gradient(90deg,var(--primary),var(--secondary));
+
     color:#fff;
 
-    background:
-    linear-gradient(
-    90deg,
-    rgba(147,51,234,.45),
-    rgba(37,99,235,.45));
+    font-weight:600;
 
-    border:
-    1px solid rgba(139,92,246,.30);
+    box-shadow:
+    0 10px 25px rgba(124,58,237,.30);
 }
 
-/* ===============================
-   MAIN
-================================ */
+/* ==================================================
+RIGHT SIDE
+================================================== */
 
 .all-categories-main{
 
     flex:1;
 }
 
+.all-categories-main h1{
+
+    color:#fff;
+
+    font-size:50px;
+
+    font-weight:800;
+
+    margin-bottom:30px;
+}
+
+/* ==================================================
+GRID
+================================================== */
+
 .all-categories-grid{
 
     display:grid;
 
     grid-template-columns:
-    repeat(auto-fill,minmax(250px,1fr));
+    repeat(auto-fill,minmax(260px,1fr));
 
-    gap:25px;
+    gap:28px;
 }
 
-```css id="n1x8qp"
-/* ==========================================================
-   ALL CATEGORIES - PART 2
-========================================================== */
-
-/* ===============================
-   BOOK CARD
-================================ */
+/* ==================================================
+CARD
+================================================== */
 
 .all-categories-card{
 
-    position:relative;
-
-    overflow:hidden;
+    background:var(--card);
 
     border-radius:22px;
 
-    background:
-    rgba(255,255,255,.04);
+    overflow:hidden;
 
-    border:
-    1px solid rgba(139,92,246,.22);
-
-    backdrop-filter:blur(18px);
-    -webkit-backdrop-filter:blur(18px);
-
-    box-shadow:
-    0 0 20px rgba(139,92,246,.10);
+    border:1px solid rgba(255,255,255,.08);
 
     transition:.35s;
+
+    box-shadow:
+    0 12px 35px rgba(0,0,0,.30);
 }
 
 .all-categories-card:hover{
 
-    transform:
-    translateY(-8px);
+    transform:translateY(-8px);
+
+    border-color:var(--primary);
 
     box-shadow:
-    0 18px 35px rgba(139,92,246,.22);
-
-    border-color:
-    rgba(139,92,246,.35);
+    0 18px 40px rgba(124,58,237,.25);
 }
 
-/* ===============================
-   BOOK IMAGE
-================================ */
+/* ==================================================
+IMAGE
+================================================== */
 
 .all-categories-card-img{
 
@@ -183,18 +201,18 @@
 
     object-fit:cover;
 
-    transition:.45s;
+    transition:.35s;
 }
 
 .all-categories-card:hover
 .all-categories-card-img{
 
-    transform:scale(1.06);
+    transform:scale(1.05);
 }
 
-/* ===============================
-   CARD BODY
-================================ */
+/* ==================================================
+BODY
+================================================== */
 
 .all-categories-card-body{
 
@@ -205,37 +223,31 @@
 
     color:#fff;
 
-    font-size:19px;
+    font-size:24px;
 
-    font-weight:600;
+    font-weight:700;
 
-    margin-bottom:10px;
+    margin-bottom:12px;
 }
 
-.all-categories-card p{
+.all-categories-card-body p{
 
-    color:#cbd5e1;
+    color:var(--text-light);
 
-    font-size:14px;
+    font-size:15px;
 
-    line-height:1.6;
+    margin-bottom:15px;
 }
 
-/* ===============================
-   BUTTON
-================================ */
+/* ==================================================
+BUTTON
+================================================== */
 
 .all-categories-btn{
 
-    display:inline-flex;
+    display:inline-block;
 
-    align-items:center;
-
-    justify-content:center;
-
-    margin-top:18px;
-
-    padding:11px 20px;
+    padding:10px 20px;
 
     border-radius:12px;
 
@@ -246,128 +258,97 @@
     font-weight:600;
 
     background:
-    linear-gradient(
-    90deg,
-    #9333ea,
-    #2563eb);
+    linear-gradient(90deg,var(--primary),var(--secondary));
 
     transition:.35s;
 }
 
 .all-categories-btn:hover{
 
+    color:#fff;
+
     transform:translateY(-2px);
 
     box-shadow:
-    0 12px 25px rgba(139,92,246,.35);
+    0 10px 25px rgba(124,58,237,.35);
 }
 
-/* ===============================
-   FADE ANIMATION
-================================ */
-
-@keyframes cardFade{
-
-    from{
-
-        opacity:0;
-
-        transform:
-        translateY(25px);
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:
-        translateY(0);
-    }
-}
-
-.all-categories-card{
-
-    animation:
-    cardFade .6s ease both;
-}
-
-/* ===============================
-   CUSTOM SCROLLBAR
-================================ */
-
-::-webkit-scrollbar{
-
-    width:10px;
-}
-
-::-webkit-scrollbar-track{
-
-    background:#020617;
-}
-
-::-webkit-scrollbar-thumb{
-
-    border-radius:30px;
-
-    background:
-    linear-gradient(
-    180deg,
-    #9333ea,
-    #2563eb);
-}
-
-/* ===============================
-   RESPONSIVE
-================================ */
+/* ==================================================
+RESPONSIVE
+================================================== */
 
 @media(max-width:992px){
 
-    .all-categories-row{
+.all-categories-row{
 
-        flex-direction:column;
-    }
+    flex-direction:column;
+}
 
-    .all-categories-sidebar{
+.all-categories-sidebar{
 
-        width:100%;
-    }
+    width:100%;
+
+    position:relative;
+
+    top:0;
+}
+
+.all-categories-grid{
+
+    grid-template-columns:
+    repeat(2,1fr);
+}
+
 }
 
 @media(max-width:768px){
 
-    .all-categories-container{
+.all-categories-container{
 
-        padding:20px;
-    }
-
-    .all-categories-grid{
-
-        grid-template-columns:
-        repeat(auto-fill,minmax(200px,1fr));
-
-        gap:20px;
-    }
-
-    .all-categories-card-img{
-
-        height:260px;
-    }
+    padding:25px;
 }
 
-@media(max-width:576px){
+.all-categories-grid{
 
-    .all-categories-grid{
+    grid-template-columns:1fr;
+}
 
-        grid-template-columns:1fr;
-    }
+.all-categories-main h1{
 
-    .all-categories-card-img{
+    font-size:36px;
 
-        height:320px;
-    }
+    text-align:center;
+}
 
-    .all-categories-btn{
+.all-categories-sidebar h3{
 
-        width:100%;
-    }
+    text-align:center;
+}
+
+}
+
+@media(max-width:480px){
+
+.all-categories-container{
+
+    padding:18px;
+}
+
+.all-categories-card-img{
+
+    height:240px;
+}
+
+.all-categories-card-title{
+
+    font-size:20px;
+}
+
+.all-categories-btn{
+
+    width:100%;
+
+    text-align:center;
+}
+
 }

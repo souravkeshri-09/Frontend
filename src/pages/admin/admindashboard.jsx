@@ -1,3 +1,11 @@
+import {
+  FaTachometerAlt,
+  FaUsers,
+  FaBook,
+  FaComments,
+  FaClipboardList,
+  FaUserTie,
+} from "react-icons/fa";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Pie } from "react-chartjs-2";
@@ -143,18 +151,18 @@ const AdminDashboard = () => {
     try {
       const url = Server_URL + 'books/new';
       const result = await axios.get(url);
-      const {error, message} = result.data;
+      const { error, message } = result.data;
       if (error) {
-        alert(message);        
+        alert(message);
       } else {
         console.log("result");
         console.log(result);
-        const {books, totalBooks} = result.data;
+        const { books, totalBooks } = result.data;
         setLatestBooks(books);
       }
     } catch (error) {
-      console.error("Error fetching books:", error);            
-    }    
+      console.error("Error fetching books:", error);
+    }
   }
 
   const handleSectionChange = (section) => {
@@ -173,61 +181,60 @@ const AdminDashboard = () => {
       <div className="row g-0">
         <nav className="col-md-3 col-lg-2 admin-sidebar">
           {role == "admin" ? (
-            <h4 className="admin-sidebar-title">📌 Admin Panel</h4>
+            <h4 className="admin-sidebar-title">
+              <FaClipboardList /> Admin Panel
+            </h4>
           ) : (
-            <h4 className="admin-sidebar-title">📌 Librarian Panel</h4>
+            <h4 className="admin-sidebar-title">
+  <FaClipboardList /> Librarian Panel
+</h4>
           )}
           <ul className="admin-nav">
             <li className="admin-nav-item">
               <button
-                className={`admin-nav-btn ${
-                  selectedSection === "dashboard" ? "active" : ""
-                }`}
+                className={`admin-nav-btn ${selectedSection === "dashboard" ? "active" : ""
+                  }`}
                 onClick={() => handleSectionChange("dashboard")}
               >
-                📊 Dashboard
+                <FaTachometerAlt /> Dashboard
               </button>
             </li>
             <li className="admin-nav-item">
               <button
-                className={`admin-nav-btn ${
-                  selectedSection === "users" ? "active" : ""
-                }`}
+                className={`admin-nav-btn ${selectedSection === "users" ? "active" : ""
+                  }`}
                 onClick={() => handleSectionChange("users")}
               >
-                👥 Users
+                <FaUsers /> Users
               </button>
             </li>
             {role === "admin" && (
               <li className="admin-nav-item">
                 <button
-                  className={`admin-nav-btn ${
-                    selectedSection === "librarians" ? "active" : ""
-                  }`}
+                  className={`admin-nav-btn ${selectedSection === "librarians" ? "active" : ""
+                    }`}
                   onClick={() => handleSectionChange("librarians")}
                 >
-                  📚 Librarians
+                  <FaUserTie /> Librarians
                 </button>
               </li>
             )}
             <li className="admin-nav-item">
               <button
-                className={`admin-nav-btn ${
-                  selectedSection === "books" ? "active" : ""
-                }`}
+                className={`admin-nav-btn ${selectedSection === "books" ? "active" : ""
+                  }`}
                 onClick={() => handleSectionChange("books")}
               >
-                📖 Books
+                <FaBook /> Books
               </button>
             </li>
             <li className="admin-nav-item">
               <button
-                className={`admin-nav-btn ${
-                  selectedSection === "feedback" ? "active" : ""
-                }`}
+                className={`admin-nav-btn ${selectedSection === "feedback" ? "active" : ""
+                  }`}
                 onClick={() => handleSectionChange("feedback")}
               >
-                💬 Feedback
+                <FaComments /> Feedback
               </button>
             </li>
           </ul>
@@ -236,7 +243,7 @@ const AdminDashboard = () => {
         <main className="col-md-9 col-lg-10 admin-main">
           {selectedSection === "dashboard" && (
             <>
-              <h2 className="admin-section-title">📊 Dashboard Overview</h2>
+              <h2 className="admin-section-title"><FaTachometerAlt /> Dashboard Overview</h2>
 
               <div className="stats-grid">
                 <div className="stat-card books">
@@ -300,9 +307,9 @@ const AdminDashboard = () => {
                   <div className="activity-list">
                     {latestBooks.slice(0, 4).map((book, index) => (
                       <div key={index} className="activity-item">
-                        <div className="activity-icon">📚</div>
+                        <div className="activity-icon"><FaBook /></div>
                         <div className="activity-text">
-                          <strong>{book.title}</strong> added by {book.addedBy?.name} 
+                          <strong>{book.title}</strong> added by {book.addedBy?.name}
                         </div>
                       </div>
                     ))}
@@ -314,7 +321,7 @@ const AdminDashboard = () => {
 
           {selectedSection === "users" && (
             <>
-              <h2 className="admin-section-title">👥 Users Management</h2>
+              <h2 className="admin-section-title"><FaUsers /> Users Management</h2>
               <div className="admin-table-container">
                 <table className="admin-table">
                   <thead>
@@ -351,7 +358,7 @@ const AdminDashboard = () => {
 
           {selectedSection === "librarians" && (
             <>
-              <h2 className="admin-section-title">📚 Librarians Management</h2>
+              <h2 className="admin-section-title"><FaUserTie /> Librarians Management</h2>
               <div className="admin-table-container">
                 <table className="admin-table">
                   <thead>
@@ -388,7 +395,7 @@ const AdminDashboard = () => {
 
           {selectedSection === "books" && (
             <>
-              <h2 className="admin-section-title">📖 Books Inventory</h2>
+              <h2 className="admin-section-title"><FaBook /> Books Inventory</h2>
               <div className="admin-table-container">
                 <table className="admin-table">
                   <thead>
@@ -420,7 +427,7 @@ const AdminDashboard = () => {
           {selectedSection === "feedback" && (
             <>
               <h2 className="admin-section-title">
-                💬 Feedback Messages
+                <FaComments /> Feedback Messages
               </h2>
               <div className="admin-table-container">
                 <table className="admin-table">
@@ -434,9 +441,9 @@ const AdminDashboard = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {feedback.map((item,index)=>(
+                    {feedback.map((item, index) => (
                       <tr key={item._id}>
-                        <td>{index+1}</td>
+                        <td>{index + 1}</td>
                         <td>{item.name}</td>
                         <td>{item.email}</td>
                         <td>{item.subject}</td>
@@ -448,7 +455,7 @@ const AdminDashboard = () => {
               </div>
             </>
           )}
-      </main>
+        </main>
       </div>
     </div>
   );
